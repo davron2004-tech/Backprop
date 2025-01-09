@@ -37,3 +37,42 @@ A lightweight, modular implementation of backpropagation and neural networks in 
    git clone https://github.com/davron2004-tech/Backprop.git
    cd Backprop
    ```
+___
+
+## 🔌 **Example usage**
+
+```python
+from Backprop import *
+
+# Define input data and target function
+X = np.random.rand(1000, 3) * 10 - 5  # Random input in range [-5, 5]
+y = (X[:, 0]**3 + 3 * X[:, 1]**2 - 2 * X[:, 2]).reshape(-1, 1)
+
+# Build and train the model
+model = Backprop(input_size=3, layers=[
+    Layer(64, 'relu'),
+    Layer(1)
+])
+model.train(X, y, loss_function='mse', epochs=100, batch_size=32, learning_rate=0.01)
+
+# Make predictions
+predictions = model.predict(X)
+```
+
+```python
+from nnfs.datasets import spiral_data
+from Backprop import *
+
+# Load dataset
+X, y = spiral_data(samples=100, classes=3)
+
+# Build and train the model
+model = Backprop(input_size=2, layers=[
+    Layer(64, 'relu'),
+    Layer(3, 'softmax')
+])
+model.train(X, y, loss_function='categorical_crossentropy', epochs=100, batch_size=32, learning_rate=0.01)
+
+# Make predictions
+predictions = model.predict(X)
+```
